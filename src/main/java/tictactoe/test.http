@@ -1,0 +1,112 @@
+###Register
+POST http://localhost:8080/auth/register
+Content-type: application/json
+
+    {
+    "login":"user",
+    "password":"1234"
+    }
+
+###Register second player
+POST http://localhost:8080/auth/register
+Content-type: application/json
+
+{
+"login":"user2",
+"password":"4321"
+}
+
+###Player 1 Login
+GET http://localhost:8080/auth/login
+Authorization: Basic dXNlcjoxMjM0
+
+###Player 2 Login
+GET http://localhost:8080/auth/login
+Authorization: Basic dXNlcjI6NDMyMQ
+
+###Create Game vs PC
+POST http://localhost:8080/game
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM0
+
+{
+  "mode" : "PC",
+  "userId" : "3eca9fde-d7ea-42da-aeef-f09a773425da"
+}
+
+###Create Game vs Player
+POST http://localhost:8080/game
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM0
+
+{
+  "mode" : "Player",
+  "userId" : "3eca9fde-d7ea-42da-aeef-f09a773425da"
+}
+
+###Play Game
+POST http://localhost:8080/game/8bafac9f-f973-45b3-8045-4759dccb4cf7
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM0
+
+{
+  "row":"2",
+  "column":"2"
+}
+
+###Play Second Game
+POST http://localhost:8080/game/b1802bbc-7ceb-4c59-afaa-81afd1282467
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM0
+
+{
+  "row":"0",
+  "column":"0"
+}
+
+###Get game info
+GET http://localhost:8080/game/8bafac9f-f973-45b3-8045-4759dccb4cf7
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM0
+
+###Player 1 move
+POST http://localhost:8080/game/3d2f0dbb-5f15-4fbb-83ff-f3e32f51739c
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM0
+
+{
+  "row":"0",
+  "column":"0"
+}
+
+###Player 2 move
+POST http://localhost:8080/game/3d2f0dbb-5f15-4fbb-83ff-f3e32f51739c
+Content-Type: application/json
+Authorization: Basic dXNlcjI6NDMyMQ
+
+{
+  "row":"0",
+  "column":"0"
+}
+
+###Join game
+POST http://localhost:8080/game/join/24bde8f9-3b36-484f-a876-d378aa06f66b
+Content-Type: application/json
+Authorization: Basic dXNlcjoxMjM0
+
+###Join game second user
+POST http://localhost:8080/game/join/3d2f0dbb-5f15-4fbb-83ff-f3e32f51739c
+Content-Type: application/json
+Authorization: Basic dXNlcjI6NDMyMQ
+
+###Show available games
+GET http://localhost:8080/game/available
+Authorization: Basic dXNlcjoxMjM0
+
+###Show only ID's available games
+GET http://localhost:8080/game/availableId
+Authorization: Basic dXNlcjoxMjM0
+
+###Get user by id
+GET http://localhost:8080/game/users/3eca9fde-d7ea-42da-aeef-f09a773425da
+Authorization: Basic dXNlcjoxMjM0
