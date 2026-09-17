@@ -1,10 +1,9 @@
 package tictactoe.datasource.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import tictactoe.domain.model.User.Role;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,8 +18,14 @@ public class UserEntity {
     @Column
     private String password;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private List<Role> roles;
+
     public UserEntity() { }
 
+    public void setRoles(List<Role> roles) { this.roles = roles; }
+    public List<Role> getRoles() { return roles; }
     public UUID getId() {
         return id;
     }

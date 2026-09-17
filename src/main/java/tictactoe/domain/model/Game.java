@@ -1,5 +1,7 @@
 package tictactoe.domain.model;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 
 public class Game {
@@ -34,7 +36,6 @@ public class Game {
     public void setPlayerXId(UUID id) { this.playerX = id; }
     public void setPlayerOId(UUID id) { this.playerO = id; }
     public void setGameBoard(GameBoard gameBoard) { this.gameBoard = gameBoard; }
-
 
     public enum Token {
         X(1),

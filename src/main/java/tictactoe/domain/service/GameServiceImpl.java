@@ -134,8 +134,8 @@ public class GameServiceImpl implements GameService{
             game.setVsComputer(true);
             game.setState(GameStates.IN_PROGRESS);
         } else {
-            game.setState(GameStates.WAITING_FOR_PLAYERS);
             game.setVsComputer(false);
+            game.setState(GameStates.WAITING_FOR_PLAYERS);
         }
         game.setPlayerXId(userId);
         game.setCurrentTurn(userId);

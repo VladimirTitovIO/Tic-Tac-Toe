@@ -33,16 +33,16 @@ public class GameEntity {
     public void setVsComputer(boolean vsComputer) { this.vsComputer = vsComputer;}
     public void setId(UUID id) { this.id = id; }
     public void setBoard(String board) { this.board = board; }
+    public void setPlayerXId(UUID id) { playerXId = id; }
+    public void setPlayerOId(UUID id) { playerOId = id; }
+    public void setCurrentTurn(UUID id) { currentTurn = id; }
+    public void setGameState(GameStates state) { this.state = state; }
     public String getBoard() { return board; }
     public UUID getId() { return id; }
     public UUID getPlayerXId() { return playerXId; }
     public UUID getPlayerOId() { return playerOId; }
     public UUID getCurrentTurn() { return currentTurn; }
     public GameStates getState() { return state; }
-    public void setPlayerXId(UUID id) { playerXId = id; }
-    public void setPlayerOId(UUID id) { playerOId = id; }
-    public void setCurrentTurn(UUID id) { currentTurn = id; }
-    public void setGameState(GameStates state) { this.state = state; }
 
     public GameEntity() {}
 

@@ -2,8 +2,9 @@ package tictactoe.web.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tictactoe.web.model.AuthorizationService;
-import tictactoe.web.model.SignUpRequest;
+import tictactoe.domain.model.User;
+import tictactoe.domain.service.UserService;
+import tictactoe.web.model.*;
 
 import java.util.UUID;
 
@@ -26,11 +27,20 @@ public class AuthorizationController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<?> login(@RequestHeader("Authorization") String header) {
-        String base64 = header.replace("Basic ", "");
-        UUID id = authService.authorize(base64);
-        return ResponseEntity.ok(id);
+    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest jwtRequest) {
+        JwtResponse response = authService.authorize(jwtRequest);
+        return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/update-access")
+    public ResponseEntity<JwtResponse> updateAccessToken(@RequestBody RefreshJwtRequest refreshRequest) {
+        JwtResponse response = authService.refreshAccessToken(refreshRequest.getRefreshToken());
+        return ResponseEntity.ok(response);
+    }
 
+    @PostMapping("/update-refresh")
+    public ResponseEntity<JwtResponse> updateRefreshToken(@RequestBody RefreshJwtRequest refreshRequest) {
+        JwtResponse response = authService.refreshRefreshToken(refreshRequest.getRefreshToken());
+        return ResponseEntity.ok(response);
+    }
 }

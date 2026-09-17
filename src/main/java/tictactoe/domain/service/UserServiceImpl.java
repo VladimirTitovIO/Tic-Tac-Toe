@@ -2,8 +2,10 @@ package tictactoe.domain.service;
 
 import tictactoe.datasource.mapper.UserMapper;
 import tictactoe.datasource.repository.UserRepository;
+import tictactoe.domain.model.User.Role;
 import tictactoe.domain.model.User;
 
+import java.util.List;
 import java.util.UUID;
 
 public class UserServiceImpl implements UserService {
@@ -15,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(String login, String password) {
-        User user = new User(UUID.randomUUID(), login, password);
+        User user = new User(UUID.randomUUID(), login, password, List.of(Role.USER));
         repository.save(UserMapper.toEntity(user));
         return user;
     }

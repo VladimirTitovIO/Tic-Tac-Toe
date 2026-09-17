@@ -8,26 +8,23 @@ import tictactoe.domain.service.GameServiceImpl;
 import org.springframework.context.annotation.Bean;
 import tictactoe.domain.service.UserService;
 import tictactoe.domain.service.UserServiceImpl;
-import tictactoe.web.model.AuthFilter;
-import tictactoe.web.model.AuthorizationService;
-import tictactoe.web.model.AuthorizationServiceImpl;
+import tictactoe.web.model.*;
 
 @Configuration
 public class AppConfiguration {
-
     @Bean
     public UserService userService(UserRepository userRepository) {
         return new UserServiceImpl(userRepository);
     }
 
     @Bean
-    public AuthorizationService authorizationService(UserService userService) {
-        return new AuthorizationServiceImpl(userService);
+    public AuthorizationService authorizationService(UserService userService, JwtProvider jwtProvider, JwtUtil jwtUtil) {
+        return new DefaultAuthorizationService(userService, jwtProvider, jwtUtil);
     }
 
     @Bean
-    public AuthFilter authFilter(AuthorizationService authService) {
-        return new AuthFilter(authService);
+    public AuthFilter authFilter(AuthorizationService authService, JwtProvider jwtProvider, UserService userService, JwtUtil jwtUtil) {
+        return new AuthFilter(authService, jwtProvider, userService, jwtUtil);
     }
 
     @Bean

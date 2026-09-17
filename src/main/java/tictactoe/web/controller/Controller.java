@@ -1,6 +1,7 @@
 package tictactoe.web.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
 import tictactoe.datasource.model.UserEntity;
 import tictactoe.datasource.repository.UserRepository;
@@ -11,8 +12,7 @@ import tictactoe.domain.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tictactoe.web.mapper.GameWebMapper;
-import tictactoe.web.model.AuthorizationService;
-import tictactoe.web.model.GameWebModel;
+import tictactoe.web.model.*;
 
 import java.util.List;
 import java.util.Map;
@@ -39,14 +39,13 @@ public class Controller {
     }
 
     @PostMapping
-    public ResponseEntity<GameWebModel> createGame(@RequestBody Map<String, String> request) {
+    public ResponseEntity<GameWebModel> createGame(@RequestBody Map<String, String> request, Authentication authentication) {
         String mode = request.get("mode");
-        UUID userId = UUID.fromString(request.get("userId"));
+        UUID userId = (UUID) authentication.getPrincipal();
         if (mode == null || (!mode.equals("PC") && !mode.equals("Player"))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid mode, choose PC or Player as your opponent");
         }
         Game game = gameService.createGame(mode, userId);
-        if (mode.equals("Player")) game.setState(GameStates.WAITING_FOR_PLAYERS);
         GameWebModel gameWeb = GameWebMapper.toWeb(game);
         gameService.saveGame(game);
         return ResponseEntity.status(HttpStatus.CREATED).body(gameWeb);
@@ -67,8 +66,8 @@ public class Controller {
     }
 
     @PostMapping("/join/{id}")
-    public ResponseEntity<?> joinGame(@PathVariable("id") UUID id, @RequestHeader("Authorization") String header) {
-        UUID userId = authorizationService.authorize(header.replace("Basic ", ""));
+    public ResponseEntity<?> joinGame(@PathVariable("id") UUID id, Authentication authentication) {
+        UUID userId = (UUID) authentication.getPrincipal();
         Game game = gameService.getGame(id);
         if (game.isVsComputer()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot join a game versus PC");
@@ -99,8 +98,9 @@ public class Controller {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<?> makeMove(@PathVariable UUID id, @RequestBody Map<String, String> values, @RequestHeader("Authorization") String header) {
-        UUID userId = authorizationService.authorize(header.replace("Basic ", ""));
+    public ResponseEntity<?> makeMove(@PathVariable UUID id, @RequestBody Map<String, String> values,
+                                      Authentication authentication) {
+        UUID userId = (UUID) authentication.getPrincipal();
         Game game = gameService.getGame(id);
         int row = Integer.parseInt(values.get("row"));
         int col = Integer.parseInt(values.get("column"));
@@ -117,5 +117,12 @@ public class Controller {
         }
         gameService.makeMove(game, userId, row, col);
         return ResponseEntity.ok(GameWebMapper.toWeb(game));
+    }
+
+    @GetMapping("/get-info-from-access")
+    public Optional<UserEntity> getInformationFromAccessToken(Authentication authentication) {
+        UUID userId = (UUID) authentication.getPrincipal();
+        Optional<UserEntity> user = userRepository.findById(userId);
+        return user;
     }
 }
