@@ -25,6 +25,7 @@ REST API приложения для игры в крестики нолики �
     }
 
 ### Логин
+    '''
     GET http://localhost:8080/auth/login
     Header:
     Content-type: application/json
@@ -35,8 +36,10 @@ REST API приложения для игры в крестики нолики �
     }    
     
     При выводе получаем 2 токена. Access Token и Refresh Token.
-    
-    ![Пример Вывода](./screenshots/LoginExample.png)
+    '''
+    Пример вывода:
+    <img src="/screenshots/LoginExample.png">
+    ![Пример Вывода](screenshots/LoginExample.png)
     
 ### Создание игры
     POST http://localhost:8080/game
