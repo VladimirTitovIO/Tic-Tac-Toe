@@ -15,6 +15,7 @@ REST API приложения для игры в крестики нолики �
 Далее ./gradlew bootRun для запуски приложения
 ## API endpoints:
 ### Регистрация
+
     POST http://localhost:8080/auth/register
     Header:
     Content-type: application/json
@@ -23,8 +24,9 @@ REST API приложения для игры в крестики нолики �
         "login":"<your_username>",
         "password":"<your_password>"
     }
-
+    
 ### Логин
+
     GET http://localhost:8080/auth/login
     Header:
     Content-type: application/json
@@ -33,11 +35,11 @@ REST API приложения для игры в крестики нолики �
         "login":"<your_username>",
         "password":"<your_password>"
     }    
-'''    
-    При выводе получаем 2 токена. Access Token и Refresh Token.
-    Пример вывода:
-    ![Пример Вывода](screenshots/LoginExample.png)
-    
+При выводе получаем 2 токена. Access Token и Refresh Token.
+Пример вывода:
+
+![Пример Вывода](screenshots/LoginExample.png)
+
 ### Создание игры
     POST http://localhost:8080/game
     Request:
