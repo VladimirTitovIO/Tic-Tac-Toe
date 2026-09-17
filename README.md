@@ -13,6 +13,16 @@ REST API приложения для игры в крестики нолики �
 Переходим в папку TicTacToe
 Используем ./gradlew build для сборки приложения
 Далее ./gradlew bootRun для запуски приложения
+Для корректной работы приложения так же потребуются 3 переменные окружения:
+- DB_USERNAME = имя пользователя и базы данных postgresql (одинаковые)
+- DB_PASSWORD = пароль пользователя
+- JWT_SECRET = секретный ключ для создания и проверки jwt токенов
+Можно прописать их при помощи run configuration -> edit -> environmental variables в самой intellij ide.
+Либо добавить их через терминал при помощи:
+$env:DB_USERNAME="your_username"
+$env:DB_PASSWORD="your_password"
+$env:JWT_SECRET="your_secret"
+ 
 ## API endpoints:
 ### Регистрация
 
