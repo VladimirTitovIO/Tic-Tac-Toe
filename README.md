@@ -35,7 +35,7 @@ REST API приложения для игры в крестики нолики �
     }    
     
     При выводе получаем 2 токена. Access Token и Refresh Token.
-    ![Пример Вывода](screenshots/LoginExample.png)
+    ![Пример Вывода](https://github.com/VladimirTitovIO/Tic-Tac-Toe/blob/main/screenshots/LoginExample.png)
     
 ### Создание игры
     POST http://localhost:8080/game
